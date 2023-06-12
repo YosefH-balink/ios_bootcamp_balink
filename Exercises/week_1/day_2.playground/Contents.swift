@@ -54,6 +54,8 @@ func biggestSlice(diameterA: String, slicesA: String, diameterB: String, slicesB
         message = "Slice A is bigger"
     case (nil, .some):
         message = "Slice B is bigger"
+    case let (size1?, size2?) where size1 == size2:
+        message = "Neither slice is bigger"
     case let (size1?, size2?) where size1 > size2:
         message = "Slice A is bigger"
     default:
@@ -72,6 +74,7 @@ biggestSlice(diameterA: "Pepperoni", slicesA: "6", diameterB: "Sausage", slicesB
 // => Neither slice is bigger
 
 
+// run closure K times
 func applyKTimes (_ K: Int, _ closure: () -> Void) {
     for _ in 0..<K {
     closure()
@@ -81,3 +84,39 @@ func applyKTimes (_ K: Int, _ closure: () -> Void) {
 applyKTimes(3) {
     print("We Heart Swift")
 }
+
+
+
+
+
+
+//4. change location of character in game
+var location = (x: 0, y: 0)
+
+enum Direction {
+    case up
+    case down
+    case right
+    case left
+}
+
+var steps: [Direction] = [.up, .up, .left, .down, .left]
+
+// gets a array of Direction and moves location of character in game
+func moveLocation(steps: [Direction]) {
+    for step in steps {
+        switch step {
+        case .up:
+            location.x += 1
+        case .down:
+            location.x -= 1
+        case .right:
+            location.y += 1
+        case .left:
+            location.y -= 1
+        }
+    }
+}
+
+moveLocation(steps: steps)
+print(location)

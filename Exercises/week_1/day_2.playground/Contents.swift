@@ -47,15 +47,16 @@ func biggestSlice(diameterA: String, slicesA: String, diameterB: String, slicesB
     
     let message: String
     
-    if (sliceSize1 == nil && sliceSize2 == nil){
+    switch (sliceSize1, sliceSize2) {
+    case (nil, nil):
         message = "Neither slice is bigger"
-    } else if (sliceSize1 != nil && sliceSize2 == nil) {
+    case (.some, nil):
         message = "Slice A is bigger"
-    }else if (sliceSize1 == nil && sliceSize2 != nil) {
+    case (nil, .some):
         message = "Slice B is bigger"
-    }else if (sliceSize1! > sliceSize2!) {
+    case let (size1?, size2?) where size1 > size2:
         message = "Slice A is bigger"
-    }else  {
+    default:
         message = "Slice B is bigger"
     }
     

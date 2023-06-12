@@ -70,3 +70,14 @@ biggestSlice(diameterA: "10", slicesA: "6", diameterB: "12", slicesB: "8")
 // => Slice B is bigger
 biggestSlice(diameterA: "Pepperoni", slicesA: "6", diameterB: "Sausage", slicesB: "12")
 // => Neither slice is bigger
+
+
+func applyKTimes (_ K: Int, _ closure: () -> Void) {
+    for _ in 0..<K {
+    closure()
+    }
+}
+
+applyKTimes(3) {
+    print("We Heart Swift")
+}

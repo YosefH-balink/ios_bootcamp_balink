@@ -9,19 +9,19 @@ func sliceSize(diameter: Double?, slices: Int?) -> Double? {
         return nil
     }
 }
- 
+
 // calculates area of circle from diameter
 func calculateAreaOfCircleFromDiameter (diameter: Double) -> Double {
     let pi = 3.14159265359
     let radius = diameter / 2
     return pi * pow(radius, 2)
 }
- 
+
 
 // returns false if nil, or Diameter is negative,
 // or slices is less then 1.
 func IsNilOrDiameterNegativeOrSlicesLessThen1
-    (diameter: Double?, slices: Int?) -> Bool {
+(diameter: Double?, slices: Int?) -> Bool {
     switch (diameter, slices) {
     case let (diam?, slic?): return diam > 1 && slic >= 1
     default: return false
@@ -62,7 +62,7 @@ func biggestSlice(diameterA: String, slicesA: String, diameterB: String, slicesB
         message = "Slice B is bigger"
     }
     
-       return message
+    return message
 }
 
 
@@ -77,17 +77,13 @@ biggestSlice(diameterA: "Pepperoni", slicesA: "6", diameterB: "Sausage", slicesB
 // run closure K times
 func applyKTimes (_ K: Int, _ closure: () -> Void) {
     for _ in 0..<K {
-    closure()
+        closure()
     }
 }
 
 applyKTimes(3) {
     print("We Heart Swift")
 }
-
-
-
-
 
 
 //4. change location of character in game

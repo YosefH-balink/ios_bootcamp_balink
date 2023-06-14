@@ -9,28 +9,28 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var line1: UITextField!
-    @IBOutlet weak var line2: UITextField!
-    
-    
-    var calculaterLine1: Double = 0 {
-        didSet {
-            line1.text = String(format:"%0.0f", calculaterLine1)
-        }
-    }
-    
-    var calculaterLine2: Double = 0  {
-        didSet {
-            line2.text = String(format:"%0.0f", calculaterLine2)
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    @IBOutlet weak var line1: UITextField!
+    @IBOutlet weak var line2: UITextField!
+    
+    var calculaterLine1: Double = 0 {
+        didSet {
+          //  line1.text = String(format:"%0.0f", calculaterLine1)
+            line1.text = String(calculaterLine1)
+        }
+    }
+    var calculaterLine2: Double = 0  {
+        didSet {
+         //   line2.text = String(format:"%0.0f", calculaterLine2)
+            line2.text = String(calculaterLine2)
+        }
+    }
+  // action when a number is pressed to show in view
     @IBAction func numberPressed(_ sender: UIButton) {
-        let num = Double(sender.currentTitle!)
+        var num = Double(sender.currentTitle!)
 
         if !preestAporater{
             if calculaterLine1 == 0 {
@@ -52,34 +52,36 @@ class ViewController: UIViewController {
     
     var aporatersType: String = ""
     var preestAporater:Bool = false
+    //action when a aporater is pressed
     @IBAction func aporatersPressed(_ sender: UIButton) {
         aporatersType = (sender.currentTitle!)
         preestAporater = !preestAporater
     }
     
+    var history:[String] = []
     var eqwalsPressed:Bool = false
+    var sum:Double = 0
+    // action when the eqwals is pressed
     @IBAction func eqwals(_ sender: Any) {
         eqwalsPressed = true
         switch aporatersType {
         case "+":
-            calculaterLine2 = calculaterLine1 + calculaterLine2
-            calculaterLine1 = 0
+            sum = calculaterLine1 + calculaterLine2
         case "-":
-            calculaterLine2 = calculaterLine1 - calculaterLine2
-            calculaterLine1 = 0
+            sum = calculaterLine1 - calculaterLine2
         case "x":
-            calculaterLine2 = calculaterLine1 * calculaterLine2
-            calculaterLine1 = 0
+            sum = calculaterLine1 * calculaterLine2
         case "/":
-            line2.text = String(calculaterLine1 / calculaterLine2)
-            calculaterLine1 = 0
+            sum = calculaterLine1 / calculaterLine2
         default: break
             
         }
+        history.append("\(calculaterLine1) \(aporatersType) \(calculaterLine2) = \(sum)")
+        calculaterLine2 = sum
+        calculaterLine1 = 0
         line1.text = ""
-        print(calculaterLine1,aporatersType,calculaterLine2)
     }
-    
+    // action when the clear is pressed
     @IBAction func clear(_ sender: Any) {
         preestAporater = false
         calculaterLine1 = 0

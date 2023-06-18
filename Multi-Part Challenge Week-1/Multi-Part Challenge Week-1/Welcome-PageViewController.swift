@@ -16,8 +16,9 @@ class Welcome_PageViewController: UIViewController, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "normalCall", for: indexPath)
-        cell.textLabel?.text =  members[indexPath.row]
+        cell.textLabel?.text =  members[indexPath.row].components(separatedBy: "=")[0]
         cell.imageView?.image = UIImage(named: "BA-Link")
+        cell.detailTextLabel?.text = members[indexPath.row].components(separatedBy: "=")[1]
         cell.accessoryType = .none //.disclosureIndicator
         return cell
     }

@@ -21,10 +21,9 @@ class ViewController: UIViewController {
     var password:String = ""
     var isValidName:Bool = false
     var isValidPassword:Bool = false
+    
     @IBAction func nameInput(_ sender: UITextField) {
-                if let name = sender.text {
-                    userName = name
-                }
+        userName = sender.text ??  ""
         isValidName = userName.isValidWith(regex: "^[A-Za-z]+$")
         if isValidName && userName.count > 4 && isValidPassword{
             loginButton.isEnabled = true
@@ -34,15 +33,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func passwordInput(_ sender: UITextField) {
-        if let inputPassword = sender.text {
-               password = inputPassword
-           }
-        isValidPassword = password.isValidWith(regex: "^[A-Za-z0-9]+$")
-        if isValidPassword && password.count > 6 && isValidName{
-            loginButton.isEnabled = true
-        }else{
-            loginButton.isEnabled = false
-        }
+            password = sender.text ?? ""
+            isValidPassword = password.isValidWith(regex: "^[A-Za-z0-9]+$")
+            if isValidPassword && password.count > 6 && isValidName{
+                loginButton.isEnabled = true
+            }else{
+                loginButton.isEnabled = false
+            }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

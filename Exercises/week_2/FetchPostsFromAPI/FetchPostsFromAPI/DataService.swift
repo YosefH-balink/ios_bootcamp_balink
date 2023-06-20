@@ -15,29 +15,16 @@ struct Post: Decodable {
 }
 
 class DataService {
+    
+   static let shared = DataService()
 // fetch posts from api 
-    static func fetchPosts(onFetch: @escaping (Result<[Post], Error>) -> Void) {
-        guard let url = URL(string:"https://jsonplaceholder.typicode.com/posts") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            //returns server error
-            if let error {
-                onFetch(.failure(error))
-                return
-            }
-            guard let data else {
-                //need to add error type
-                onFetch(.failure(NSError()))
-                return
-            }
-            do {
-                let posts = try JSONDecoder().decode([Post].self, from: data)
-                onFetch(.success(posts))
-            } catch {
-                //need to add error type
-                onFetch(.failure(NSError()))
-            }
-        }
-        task.resume()
+    func fetchPosts() async throws -> [Post] {
+        guard let url = URL(string:"https://jsonplaceholder.typicode.com/posts") else {fatalError("Missing URL")}
+        let request = URLRequest(url: url)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { fatalError("Error while fetching data")}
+        let posts = try JSONDecoder().decode([Post].self, from: data)
+        return posts
     }
+      
 }

@@ -16,7 +16,7 @@ class TodoCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 10
     }
     
-    func setup(todo:ToDoItem){
+    func setup(todo:Todos ){
         self.todo.text = todo.title
     }
 }

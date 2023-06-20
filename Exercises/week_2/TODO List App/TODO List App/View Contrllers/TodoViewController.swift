@@ -7,44 +7,34 @@
 
 import UIKit
 
-struct ToDoItem:Codable {
-    var title: String
-    var completed: Bool = false
-    var id: String?
-}
-
 class TodoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-   
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBAction func addTodo(_ sender: UIBarButtonItem) {
         showAlert()
     }
-  // todo struct array
-//    var todoList:[ToDoItem] = [ToDoItem(title: "Do something nice for someone I care about"), ToDoItem(title: "Memorize the fifty states and their capitals"), ToDoItem(title: "Solve a Rubik's cube"), ToDoItem(title: "Bake pastries for me and neighbor"), ToDoItem(title: "Go see a Broadway production"), ToDoItem(title: "Write a thank you letter to an influential person in my life"), ToDoItem(title: "Invite some friends over for a game night"), ToDoItem(title: "Text a friend I haven't talked to in a long time"
-//)]
-    // Retrieve the todo struct array from UserDefaults
-//    if let data = UserDefaults.standard.object(forKey: UserDefaults. todoListArray.rawValue) as? Data,
-//       let todoList = try? JSONDecoder().decode([ToDoItem], from: data) {
-//         print(category.name)
-//    }
-    var todoList:[ToDoItem] = []
+    
+    var todos:[Todos]?
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    func fetchTodos() {
+        do {
+            self.todos = try context.fetch(Todos.fetchRequest())
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        } catch {
+            
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchTodos()
         self.title = "Todo List"
         collectionView.dataSource = self
         collectionView.delegate = self
-        //get data from UserDefaults
-        if let savedData = UserDefaults.standard.object(forKey: "todoList") as? Data {
-            do{
-                let savedTodos = try JSONDecoder().decode([ToDoItem].self, from: savedData)
-                todoList = savedTodos
-            } catch {
-                print(error)
-            }
-        }
     }
  //for retaning the proper layout even after rotating the screen
     override func viewWillLayoutSubviews() {
@@ -53,7 +43,7 @@ class TodoViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return todoList.count
+        return todos?.count ?? 0
     }
   //setting the cell's color and text
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -63,7 +53,7 @@ class TodoViewController: UIViewController, UICollectionViewDataSource, UICollec
              green: .random(in: 0...1),
              blue: .random(in: 0...1),
              alpha: 0.3)
-        cell.setup(todo: todoList[indexPath.item])
+        cell.setup(todo: todos![indexPath.item])
         return cell
     }
  //seting the collectionView size and columns numbers
@@ -72,7 +62,7 @@ class TodoViewController: UIViewController, UICollectionViewDataSource, UICollec
         let collectionViewWidth = collectionView.bounds.width
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
         let spaceBetweenCells = flowLayout.minimumInteritemSpacing * (columns - 1)
-        let abjustedWidth = collectionViewWidth - spaceBetweenCells 
+        let abjustedWidth = collectionViewWidth - spaceBetweenCells
         let width:CGFloat = floor(abjustedWidth / columns)
         return CGSize(width: width, height: 100)
     }
@@ -93,17 +83,20 @@ class TodoViewController: UIViewController, UICollectionViewDataSource, UICollec
         alert.addAction(UIAlertAction(title: "Add", style: .default, handler: {_ in
             guard let fields =  alert.textFields, let todo = fields.first else {return}
             guard let newTodo = todo.text, !newTodo.isEmpty else {return}
-            self.todoList.append(ToDoItem(title: newTodo))
-            do {
-                let encodedData = try JSONEncoder().encode(self.todoList)
-                UserDefaults.standard.set(encodedData, forKey: "todoList")
-            } catch {
-                print(error)
-            }
             
-            self.collectionView.reloadData()
+            // create a new todo object
+            let addTodo = Todos(context: self.context)
+            addTodo.title = newTodo
+            addTodo.id = UUID()
+            // save the data
+            do {
+              try  self.context.save()
+            } catch {
+                
+            }
+            // Re-fetch the data
+            self.fetchTodos()
         }))
         present(alert, animated: true)
     }
 }
-

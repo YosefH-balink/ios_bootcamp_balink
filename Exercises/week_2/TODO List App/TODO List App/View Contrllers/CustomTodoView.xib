@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomTodoView" customModule="TODO_List_App" customModuleProvider="target">
+            <connections>
+                <outlet property="close" destination="W7y-N1-WVB" id="pTV-Dh-FBS"/>
+                <outlet property="isDoneSwitch" destination="5fq-gc-Uzs" id="Wy6-Oz-fzp"/>
+                <outlet property="todoLabel" destination="T28-Sd-3Gi" id="3OA-Cp-P27"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB" customClass="CustomTodoView" customModule="TODO_List_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="150"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3F-d7-qVV" customClass="CustomTodoView" customModule="TODO_List_App" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="250" height="150"/>
+                    <subviews>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5fq-gc-Uzs">
+                            <rect key="frame" x="201" y="119" width="51" height="31"/>
+                        </switch>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T28-Sd-3Gi">
+                            <rect key="frame" x="0.0" y="8" width="250" height="108"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="108" id="K9c-tE-7vD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W7y-N1-WVB">
+                            <rect key="frame" x="0.0" y="118" width="40" height="32"/>
+                            <buttonConfiguration key="configuration" style="tinted"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.78890564154849208" green="0.59336547252210559" blue="0.87058823529411766" alpha="0.89614484099303782" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="T28-Sd-3Gi" secondAttribute="trailing" id="AnE-t2-MCe"/>
+                        <constraint firstItem="W7y-N1-WVB" firstAttribute="top" secondItem="T28-Sd-3Gi" secondAttribute="bottom" constant="2" id="JZo-PB-9J4"/>
+                        <constraint firstItem="5fq-gc-Uzs" firstAttribute="top" secondItem="T28-Sd-3Gi" secondAttribute="bottom" constant="3" id="O4o-RM-PN1"/>
+                        <constraint firstItem="W7y-N1-WVB" firstAttribute="leading" secondItem="f3F-d7-qVV" secondAttribute="leading" id="Uge-s0-c2J"/>
+                        <constraint firstItem="T28-Sd-3Gi" firstAttribute="leading" secondItem="f3F-d7-qVV" secondAttribute="leading" id="lvt-7I-Gce"/>
+                        <constraint firstItem="W7y-N1-WVB" firstAttribute="leading" secondItem="T28-Sd-3Gi" secondAttribute="leading" id="nLh-za-76b"/>
+                        <constraint firstItem="T28-Sd-3Gi" firstAttribute="top" secondItem="f3F-d7-qVV" secondAttribute="topMargin" id="nQh-DA-c60"/>
+                        <constraint firstAttribute="width" constant="250" id="s3c-Pw-Snp"/>
+                        <constraint firstAttribute="bottom" secondItem="W7y-N1-WVB" secondAttribute="bottom" id="tVY-by-W7j"/>
+                        <constraint firstAttribute="height" constant="150" id="xkg-b1-Btz"/>
+                        <constraint firstItem="T28-Sd-3Gi" firstAttribute="trailing" secondItem="5fq-gc-Uzs" secondAttribute="trailing" id="xsy-ws-qcV"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="tintColor" systemColor="systemGreenColor"/>
+            <constraints>
+                <constraint firstAttribute="height" constant="150" id="2wR-of-uMe"/>
+                <constraint firstItem="f3F-d7-qVV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="CVC-qe-aa0"/>
+                <constraint firstAttribute="width" constant="250" id="h9K-PA-eKn"/>
+                <constraint firstItem="f3F-d7-qVV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="y6t-Ss-M9z"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="1877" y="-1085"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

@@ -41,16 +41,24 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oXP-nv-Etv">
+                                                    <rect key="frame" x="144" y="92" width="51" height="31"/>
+                                                </switch>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="oXP-nv-Etv" firstAttribute="trailing" secondItem="0OP-dc-cXv" secondAttribute="trailing" id="0Tp-Fb-F80"/>
+                                                <constraint firstAttribute="trailing" secondItem="oXP-nv-Etv" secondAttribute="trailing" id="AGe-dD-fSP"/>
                                                 <constraint firstItem="0OP-dc-cXv" firstAttribute="top" secondItem="trW-5U-1gB" secondAttribute="top" constant="8" id="ELK-NA-b8C"/>
                                                 <constraint firstAttribute="bottom" secondItem="0OP-dc-cXv" secondAttribute="bottom" constant="8" id="HX2-pd-hsH"/>
                                                 <constraint firstItem="0OP-dc-cXv" firstAttribute="leading" secondItem="trW-5U-1gB" secondAttribute="leading" constant="8" id="bht-SB-l7E"/>
+                                                <constraint firstAttribute="bottom" secondItem="oXP-nv-Etv" secondAttribute="bottom" id="diN-5Z-Zcq"/>
+                                                <constraint firstItem="oXP-nv-Etv" firstAttribute="top" secondItem="0OP-dc-cXv" secondAttribute="bottom" constant="-23" id="f8e-je-xLE"/>
                                                 <constraint firstAttribute="trailing" secondItem="0OP-dc-cXv" secondAttribute="trailing" constant="8" id="hUM-PQ-MIw"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="201" height="123"/>
                                         <connections>
+                                            <outlet property="isDone" destination="oXP-nv-Etv" id="ZWr-8m-TP4"/>
                                             <outlet property="todo" destination="0OP-dc-cXv" id="WJ5-Vk-HH9"/>
                                         </connections>
                                     </collectionViewCell>

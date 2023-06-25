@@ -30,7 +30,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="108" id="K9c-tE-7vD"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="25"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>

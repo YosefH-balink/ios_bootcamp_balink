@@ -10,9 +10,10 @@ import Foundation
 struct ServerError: Error {
     let message: String
 }
+
 struct Post: Decodable {
     let userId: Int
     let id: Int
     let title: String
-    let body: String
+    let body: String    
 }

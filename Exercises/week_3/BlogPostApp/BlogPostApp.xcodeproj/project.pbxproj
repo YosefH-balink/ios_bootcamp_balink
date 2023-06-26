@@ -15,6 +15,8 @@
 		EDAE5A0C2A4891CE001CD5BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDAE5A0A2A4891CE001CD5BC /* Main.storyboard */; };
 		EDAE5A0E2A489362001CD5BC /* PostTitlesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE5A0D2A489362001CD5BC /* PostTitlesViewController.swift */; };
 		EDAE5A102A489924001CD5BC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE5A0F2A489924001CD5BC /* Model.swift */; };
+		EDE3A1EC2A49C96C0057F620 /* PostTitlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE3A1EB2A49C96C0057F620 /* PostTitlesViewModel.swift */; };
+		EDE3A1EE2A49D23F0057F620 /* CellTitleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE3A1ED2A49D23F0057F620 /* CellTitleViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		EDAE5A0B2A4891CE001CD5BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EDAE5A0D2A489362001CD5BC /* PostTitlesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTitlesViewController.swift; sourceTree = "<group>"; };
 		EDAE5A0F2A489924001CD5BC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		EDE3A1EB2A49C96C0057F620 /* PostTitlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTitlesViewModel.swift; sourceTree = "<group>"; };
+		EDE3A1ED2A49D23F0057F620 /* CellTitleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellTitleViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,7 @@
 		EDAE59EE2A488F62001CD5BC /* BlogPostApp */ = {
 			isa = PBXGroup;
 			children = (
+				EDE3A1EA2A49C8F20057F620 /* ViewModel */,
 				EDAE5A0A2A4891CE001CD5BC /* Main.storyboard */,
 				EDAE5A072A489043001CD5BC /* model */,
 				EDAE5A062A48902B001CD5BC /* viewControllers */,
@@ -95,6 +100,15 @@
 				EDAE5A0F2A489924001CD5BC /* Model.swift */,
 			);
 			path = model;
+			sourceTree = "<group>";
+		};
+		EDE3A1EA2A49C8F20057F620 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EDE3A1EB2A49C96C0057F620 /* PostTitlesViewModel.swift */,
+				EDE3A1ED2A49D23F0057F620 /* CellTitleViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +182,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDE3A1EC2A49C96C0057F620 /* PostTitlesViewModel.swift in Sources */,
+				EDE3A1EE2A49D23F0057F620 /* CellTitleViewModel.swift in Sources */,
 				EDAE5A102A489924001CD5BC /* Model.swift in Sources */,
 				EDAE5A0E2A489362001CD5BC /* PostTitlesViewController.swift in Sources */,
 				EDAE59F02A488F62001CD5BC /* AppDelegate.swift in Sources */,

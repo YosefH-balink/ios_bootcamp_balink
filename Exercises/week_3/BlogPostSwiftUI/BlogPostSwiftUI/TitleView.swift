@@ -21,7 +21,7 @@ struct TitleView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
                 .task {
-                    try? await titlesViewModel.getPosts()
+                    try? await titlesViewModel.getPostsFromDataModle()
                 }
         }
     }

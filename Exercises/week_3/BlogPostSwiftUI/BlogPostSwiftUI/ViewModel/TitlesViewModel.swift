@@ -11,9 +11,8 @@ class TitlesViewModel: ObservableObject {
     
     @Published var posts:[Post] = []
    
-    func getPosts() async throws {
+    func getPostsFromDataModle() async throws {
         do {
-
             try posts = await DataService().fetchPosts()
         }
         catch let error as ServerError {
@@ -21,10 +20,5 @@ class TitlesViewModel: ObservableObject {
         }
     }
     
-//
-//    func getPosts() ->[Post]? {
-//        return self.posts
-//    }
-
 }
 

@@ -6,40 +6,45 @@
 //
 
 import UIKit
+import Combine
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginButton.isEnabled = false
         self.title = "Login"
+        loginSubscriber = validToSubmit
+            .receive(on: RunLoop.main)
+            .assign(to: \.isEnabled, on: loginButton)
     }
     
     @IBOutlet weak var loginButton: UIButton!
     
     var userName:String=""
     var password:String = ""
-    var isValidName:Bool = false
-    var isValidPassword:Bool = false
+    //Define publishers
+    @Published var isValidName:Bool = false
+    @Published var isValidPassword:Bool = false
+    
+    //Define subscriber
+    private var loginSubscriber: AnyCancellable?
+    
+    // combine publishers into single stream
+    private var  validToSubmit: AnyPublisher<Bool, Never> {
+        return Publishers.CombineLatest($isValidName, $isValidPassword)
+            .map {validUserName, validPassword in
+                return validUserName && validPassword
+            }.eraseToAnyPublisher()
+    }
     
     @IBAction func nameInput(_ sender: UITextField) {
         userName = sender.text ??  ""
         isValidName = userName.isValidWith(regex: "^[A-Za-z]+$")
-        if isValidName && userName.count > 4 && isValidPassword{
-            loginButton.isEnabled = true
-        }else{
-            loginButton.isEnabled = false
-        }
     }
     
     @IBAction func passwordInput(_ sender: UITextField) {
-            password = sender.text ?? ""
-            isValidPassword = password.isValidWith(regex: "^[A-Za-z0-9]+$")
-            if isValidPassword && password.count > 6 && isValidName{
-                loginButton.isEnabled = true
-            }else{
-                loginButton.isEnabled = false
-            }
+        password = sender.text ?? ""
+        isValidPassword = password.isValidWith(regex: "^[A-Za-z0-9]+$")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -50,18 +55,17 @@ class ViewController: UIViewController {
 }
 
 extension String {
-func isValidWith(regex: String) -> Bool {
-    guard let gRegex = try? NSRegularExpression(pattern: regex) else {
+    func isValidWith(regex: String) -> Bool {
+        guard let gRegex = try? NSRegularExpression(pattern: regex) else {
+            return false
+        }
+        let range = NSRange(location: 0, length: self.utf16.count)
+        
+        if gRegex.firstMatch(in: self, options: [], range: range) != nil {
+            return true
+        }
         return false
     }
-    let range = NSRange(location: 0, length: self.utf16.count)
-    
-    if gRegex.firstMatch(in: self, options: [], range: range) != nil {
-        return true
-    }
-    return false
-}
-    
 }
 
 

@@ -74,8 +74,8 @@ class RegisterViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
     }
-    
 }
+
 
 extension String {
     func isValidWith(regex: String) -> Bool {

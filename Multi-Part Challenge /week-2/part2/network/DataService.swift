@@ -17,14 +17,13 @@ class DataService {
         guard let url = URL(string: "https://balink.onlink.dev/register") else {
             throw ServerError(message: "Invalid URL")
         }
-        
         let body = registerBody(firstname: firstname, lastname: lastname, username: username, password: password)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONEncoder().encode(body)
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, _) = try await URLSession.shared.data(for: request)
             if let token = String(data: data, encoding: .utf8) {
                 return token
             } else {
@@ -45,7 +44,7 @@ class DataService {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue(token, forHTTPHeaderField: "Authorization")
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, _) = try await URLSession.shared.data(for: request)
             let products = try JSONDecoder().decode([Product].self, from: data)
             return products
         } catch {

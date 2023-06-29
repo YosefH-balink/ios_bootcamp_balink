@@ -9,24 +9,18 @@ import SwiftUI
 
 
 struct TitleView: View {
-    
     @StateObject var titlesViewModel = TitlesViewModel()
-       
     var body: some View {
         NavigationView {
-            List(titlesViewModel.posts) { post in
+            List(titlesViewModel.getPosts()) { post in
                 NavigationLink(post.title ?? "",
                                destination: PostView(post: post) )
             } .navigationTitle("Post Title")
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
-                .task {
-                    try? await titlesViewModel.getPostsFromDataModle()
-                }
         }
     }
 }
-
 
 
 struct TitleView_Previews: PreviewProvider {

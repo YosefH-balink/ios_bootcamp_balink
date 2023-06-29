@@ -14,6 +14,14 @@ struct Post: Hashable, Decodable, Identifiable {
     let body: String?
 }
 
+struct Comments: Hashable, Decodable, Identifiable {
+    let postId:Int?
+    let id:Int?
+    let name:String?
+    let email:String?
+    let body:String?
+}
+
 struct ServerError: Error {
     let message: String
 }

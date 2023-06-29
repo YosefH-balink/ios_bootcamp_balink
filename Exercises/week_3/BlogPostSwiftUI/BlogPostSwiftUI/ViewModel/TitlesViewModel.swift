@@ -6,19 +6,31 @@
 //
 
 import Foundation
+import Combine
 
 class TitlesViewModel: ObservableObject {
     
-    @Published var posts:[Post] = []
-   
-    func getPostsFromDataModle() async throws {
-        do {
-            try posts = await DataService().fetchPosts()
-        }
-        catch let error as ServerError {
-            print(error)
-        }
+    @Published private var posts:[Post] = []
+    var observer: AnyCancellable?
+    
+    init() {
+        getPostFromServer()
     }
     
+    func getPostFromServer(){
+        observer = DataServiceWithCombine.fetcPost()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+            }, receiveValue: {[weak self] value in
+                print(value)
+                self?.posts = value
+            })
+    }
+    
+    func getPosts () -> [Post] {
+        return self.posts
+    }
 }
+
+
 

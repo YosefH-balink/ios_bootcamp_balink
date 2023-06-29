@@ -9,15 +9,45 @@ import SwiftUI
 
 struct PostView: View {
     var post: Post
+    @State var showComments = false
     var body: some View {
         NavigationView {
             VStack {
-                Text("userId: \(post.userId ?? 0)")
-                Text("id: \(post.id ?? 0)")
-                Text("title: \(post.title ?? "")")
-                Text("body: \(post.body ?? "")")
+                HStack{
+                    Spacer()
+                    Text("Title")
+                        .font(.largeTitle)
+                    Spacer()
+                }
+                HStack{
+                    Text(post.title ?? "")
+                        .multilineTextAlignment(.center)
+                }.padding(.horizontal)
+                HStack{
+                    Spacer()
+                    Text("Post")
+                        .font(.largeTitle)
+                    Spacer()
+                }
+                HStack{
+                    Text(post.body ?? "")
+                        .multilineTextAlignment(.leading)
+                }.padding(.horizontal)
+                
+                HStack{
+                    Spacer()
+                    Button {
+                        showComments = !showComments
+                    } label: {
+                        Text(!showComments ? "Show Comments" : "Hide Comments")
+                    }
+                    Spacer()
+                }.padding()
+                Spacer()
+                if showComments {
+                    CommentsView(postId: post.id ?? 0)
+                }
             }
-          
         }.navigationTitle("Post")
             .navigationBarTitleDisplayMode(.inline)
             .padding()

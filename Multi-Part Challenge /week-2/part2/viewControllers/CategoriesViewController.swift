@@ -23,11 +23,12 @@ class CategoriesViewController: UITableViewController {
             do {
                 if let token = UserDefaults.standard.string(forKey: "token") {
                     try products = await DataService.shared.getProducts(token: token)
-                    for product in products! {
-                        categories.append(product.category!)
+                    if let products {
+                        for product in products  {
+                            categories.append(product.category ?? "")
+                        }
+                        unique = Array(Set(categories))
                     }
-                    unique = Array(Set(categories))
-                    tableView.reloadData()
                 }
             } catch let error as ServerError {
                 print(error)

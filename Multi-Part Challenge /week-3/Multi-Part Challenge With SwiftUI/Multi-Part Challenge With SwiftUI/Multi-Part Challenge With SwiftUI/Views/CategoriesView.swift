@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct CategoriesView: View {
-    @StateObject var categoriesViewModel = CategoriesViewModel()
-    
+    @StateObject var categoriesViewModel = CategoriesViewModel.shared
+    //@StateObject var productsViewModel = ProductsViewModel.shared
     var body: some View {
-        List(categoriesViewModel.getCategories(), id: \.self) { category in
-            NavigationLink(destination: ShowProducts(categorie: category)) {
+        List(categoriesViewModel.categories, id: \.self) { category in
+            NavigationLink(destination: Products(categorie: category)) {
                 HStack {
                     Text(category)
                         .font(.headline)

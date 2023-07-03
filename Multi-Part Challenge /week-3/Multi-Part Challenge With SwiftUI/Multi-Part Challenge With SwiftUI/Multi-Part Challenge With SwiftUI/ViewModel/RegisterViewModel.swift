@@ -10,18 +10,17 @@ import SwiftUI
 import Combine
 
 class RegisterViewModel: ObservableObject {
-    
+    let dataService = DataService.shared
+    private var cancellables = Set<AnyCancellable>()
     @Published var firstName = ""
     @Published var lastName = ""
     @Published var userName = ""
     @Published var password = ""
     @Published var serverCompletion = false
-
-    let dataService = DataService()
-    private var cancellables = Set<AnyCancellable>()
+    
     
     func fetchAccessToken(){
-        dataService.getAccessToken(firstname: firstName, lastname: lastName, username: userName, password: password)
+        dataService.registerGetToken(firstname: firstName, lastname: lastName, username: userName, password: password)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -41,7 +40,6 @@ class RegisterViewModel: ObservableObject {
             })
             .store(in: &cancellables)
     }
-
     
     func isValidUsername(input: String) -> Bool {
         if input.isValidWith(regex: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}") {
@@ -57,7 +55,6 @@ class RegisterViewModel: ObservableObject {
         return false
     }
 }
-
 
 
 extension String {

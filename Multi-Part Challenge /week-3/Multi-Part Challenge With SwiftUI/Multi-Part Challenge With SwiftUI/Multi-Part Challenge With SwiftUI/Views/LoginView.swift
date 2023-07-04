@@ -27,7 +27,7 @@ struct LoginView: View {
                      .multilineTextAlignment(.center)
                      .font(.headline)
                 Button("Login") {
-                    loginViewModel.fetchAccessToken()
+                    loginViewModel.isValid()
                 }
                 .font(.headline)
                 .foregroundColor(.white)

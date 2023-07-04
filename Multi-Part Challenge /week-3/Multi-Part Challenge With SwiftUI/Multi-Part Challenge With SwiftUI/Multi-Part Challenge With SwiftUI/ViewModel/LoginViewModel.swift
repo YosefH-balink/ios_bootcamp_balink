@@ -10,15 +10,26 @@ import Combine
 
 class LoginViewModel: ObservableObject {
     let dataService = DataService.shared
+    let inputValidation = InputValidation()
     private var cancellables = Set<AnyCancellable>()
     @Published var userName = ""
     @Published var password = ""
     @Published var serverCompletion = false
     @Published var failure = false
-    @Published var errorCode = ""
+   // @Published var errorCode = ""
     @Published var errorMessage = ""
-    @Published var errorStatus = 0
-   
+   // @Published var errorStatus = 0
+    
+    func isValid() {
+        inputValidation.isValid(userName: userName,password: password)
+        if !inputValidation.isInputValid {
+            self.errorMessage = inputValidation.errorMessage
+            self.failure = true
+        } else {
+            fetchAccessToken()
+        }
+    }
+    
     func fetchAccessToken(){
         dataService.loginGetToken(username: userName, password: password)
             .sink(receiveCompletion: { completion in
@@ -31,9 +42,9 @@ class LoginViewModel: ObservableObject {
                 case .failure(let error):
                     self.failure = true
                     if let urlError = error as? NSError {
-                        self.errorCode = urlError.domain
+                        //self.errorCode = urlError.domain
                         self.errorMessage = urlError.localizedDescription
-                        self.errorStatus = urlError.code
+                       // self.errorStatus = urlError.code
                         print("Error status: \(urlError.code)")
                         print("Error code: \(urlError.domain)")
                         print("Error message: \(urlError.localizedDescription)")
@@ -41,7 +52,7 @@ class LoginViewModel: ObservableObject {
                     }
                 }
             }, receiveValue: { accessToken in
-                print("accessToken--->",accessToken)
+               print("accessToken--->",accessToken)
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
             })
             .store(in: &cancellables)

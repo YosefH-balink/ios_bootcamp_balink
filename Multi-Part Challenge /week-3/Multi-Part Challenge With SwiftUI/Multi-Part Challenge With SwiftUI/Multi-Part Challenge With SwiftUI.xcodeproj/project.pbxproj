@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED2885B32A53FD45001C4EFE /* InputValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2885B22A53FD45001C4EFE /* InputValidation.swift */; };
+		ED2885B52A540D1D001C4EFE /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2885B42A540D1D001C4EFE /* ProductView.swift */; };
 		ED60E81D2A51EA430067A3C9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED60E81C2A51EA430067A3C9 /* LoginView.swift */; };
 		ED60E81F2A51EAC30067A3C9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED60E81E2A51EAC30067A3C9 /* LoginViewModel.swift */; };
 		ED60E8222A52BE910067A3C9 /* Modle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED60E8212A52BE910067A3C9 /* Modle.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED2885B22A53FD45001C4EFE /* InputValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputValidation.swift; sourceTree = "<group>"; };
+		ED2885B42A540D1D001C4EFE /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
 		ED60E81C2A51EA430067A3C9 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		ED60E81E2A51EAC30067A3C9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		ED60E8212A52BE910067A3C9 /* Modle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modle.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 				ED60E81C2A51EA430067A3C9 /* LoginView.swift */,
 				ED6228242A51975700405FB3 /* CategoriesView.swift */,
 				ED6228262A5198FA00405FB3 /* Products.swift */,
+				ED2885B42A540D1D001C4EFE /* ProductView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -122,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				ED6C4DF12A4DD0F400C3ED95 /* DataService.swift */,
+				ED2885B22A53FD45001C4EFE /* InputValidation.swift */,
 			);
 			path = DataService;
 			sourceTree = "<group>";
@@ -201,8 +207,10 @@
 				ED6C4DEF2A4DCF4300C3ED95 /* RegisterViewModel.swift in Sources */,
 				ED60E8222A52BE910067A3C9 /* Modle.swift in Sources */,
 				ED6C4DE02A4DC41300C3ED95 /* Multi_Part_Challenge_With_SwiftUIApp.swift in Sources */,
+				ED2885B52A540D1D001C4EFE /* ProductView.swift in Sources */,
 				ED6228252A51975700405FB3 /* CategoriesView.swift in Sources */,
 				ED6C4DF22A4DD0F400C3ED95 /* DataService.swift in Sources */,
+				ED2885B32A53FD45001C4EFE /* InputValidation.swift in Sources */,
 				ED60E81D2A51EA430067A3C9 /* LoginView.swift in Sources */,
 				ED60E81F2A51EAC30067A3C9 /* LoginViewModel.swift in Sources */,
 				ED6228292A51B22A00405FB3 /* CategoriesViewModel.swift in Sources */,

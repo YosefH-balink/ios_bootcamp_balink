@@ -10,28 +10,30 @@ import Combine
 
 struct RegisterView: View {
     @StateObject private var registerViewModel = RegisterViewModel()
-    @State private var valid = false
-    @State var login = false
-    @State var showAlert = false
-    @State var alertMessage = ""
-    @State var showProgressView = false
-    
-    func isValid (){
-        if !registerViewModel.isValidUsername(input: registerViewModel.userName) {
-            alertMessage = "Invalid email format"
-            showAlert = true
-            return        }
-        if !registerViewModel.isValidPassword(input: registerViewModel.password) {
-            alertMessage = "Password must contains at least one lowercase ,uppercase ,digit, and special character (@, #, $, %, ^, &, +, =)"
-            showAlert = true
-            return
-        }
-        else  {
-            showProgressView = true
-            registerViewModel.fetchAccessToken()
-            valid = true
-        }
-    }
+//    @State private var valid = false
+      @State var login = false
+//    @State var showAlert = false
+//    @State var alertMessage = ""
+//    @State var showProgressView = false
+    //Define subscriber
+
+
+//    func isValid (){
+//        if !registerViewModel.isValidUsername(input: registerViewModel.userName) {
+//            alertMessage = "Invalid email format"
+//            showAlert = true
+//            return        }
+//        if !registerViewModel.isValidPassword(input: registerViewModel.password) {
+//            alertMessage = "Password must contains at least one lowercase ,uppercase ,digit, and special character (@, #, $, %, ^, &, +, =)"
+//            showAlert = true
+//            return
+//        }
+//        else  {
+//            showProgressView = true
+//            registerViewModel.fetchAccessToken()
+//            valid = true
+//        }
+//    }
     
     var body: some View {
         NavigationStack {
@@ -56,11 +58,9 @@ struct RegisterView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                      .multilineTextAlignment(.center)
                      .font(.headline)
-//                if showProgressView {
-//                    ProgressView().progressViewStyle(CircularProgressViewStyle())
-//                }
+
                 Button("Register") {
-                    isValid()
+                    self.registerViewModel.isValid()
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -77,15 +77,15 @@ struct RegisterView: View {
                 }
             }
             .padding()
-            .alert(isPresented: $showAlert) {
+            .alert(isPresented: $registerViewModel.failure) {
                 Alert(
                     title: Text("Error"),
-                    message: Text(alertMessage),
+                    message: Text(registerViewModel.errorMessage),
                     dismissButton: .default(Text("OK"))
                 )
             }
             NavigationLink(destination: LoginView(),isActive: $login) { EmptyView() }
-            NavigationLink(destination:  CategoriesView(),isActive: $valid) { EmptyView() }
+            NavigationLink(destination:  CategoriesView(),isActive: $registerViewModel.serverCompletion) { EmptyView() }
         }.navigationTitle("Register")
             .navigationBarTitleDisplayMode(.inline)
     }

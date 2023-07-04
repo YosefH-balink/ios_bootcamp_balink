@@ -11,14 +11,30 @@ import Combine
 
 class RegisterViewModel: ObservableObject {
     let dataService = DataService.shared
+    let inputValidation = InputValidation()
     private var cancellables = Set<AnyCancellable>()
     @Published var firstName = ""
     @Published var lastName = ""
     @Published var userName = ""
     @Published var password = ""
     @Published var serverCompletion = false
+    @Published var failure = false
+    @Published var errorMessage = ""
+   //@Published var errorCode = ""
+    //@Published var errorStatus = 0
+   
     
-    
+    func isValid() {
+        inputValidation.isValid(firstName: firstName,lastName: lastName,
+                                userName: userName,password: password)
+        if !inputValidation.isInputValid {
+            self.errorMessage = inputValidation.errorMessage
+            self.failure = true
+        } else {
+            fetchAccessToken()
+        }       
+    }
+
     func fetchAccessToken(){
         dataService.registerGetToken(firstname: firstName, lastname: lastName, username: userName, password: password)
             .sink(receiveCompletion: { completion in
@@ -29,45 +45,24 @@ class RegisterViewModel: ObservableObject {
                     break
                 case .failure(let error):
                     if let urlError = error as? NSError {
+                        self.failure = true
+                       // self.errorCode = urlError.domain
+                        self.errorMessage = urlError.localizedDescription
+                       // self.errorStatus = urlError.code
                         print("Error code: \(urlError.domain)")
                         print("Error message: \(urlError.localizedDescription)")
                         print("Error status: \(urlError.code)")
                     }
                 }
             }, receiveValue: { accessToken in
-                print("accessToken--->",accessToken)
+                // print("accessToken--->",accessToken)
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
             })
             .store(in: &cancellables)
     }
-    
-    func isValidUsername(input: String) -> Bool {
-        if input.isValidWith(regex: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}") {
-            return true
-        }
-        return false
-    }
-    
-    func isValidPassword(input: String) -> Bool {
-        if input.isValidWith(regex: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$") {
-            return true
-        }
-        return false
-    }
 }
 
 
-extension String {
-    func isValidWith(regex: String) -> Bool {
-        guard let gRegex = try? NSRegularExpression(pattern: regex) else {
-            return false
-        }
-        let range = NSRange(location: 0, length: self.utf16.count)
-        if gRegex.firstMatch(in: self, options: [], range: range) != nil {
-            return true
-        }
-        return false
-    }
-}
+
 
 

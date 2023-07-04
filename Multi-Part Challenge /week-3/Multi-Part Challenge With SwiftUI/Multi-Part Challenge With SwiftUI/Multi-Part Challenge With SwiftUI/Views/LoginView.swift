@@ -44,7 +44,7 @@ struct LoginView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
-            NavigationLink(destination: CategoriesView(),isActive: $loginViewModel.serverCompletion) { EmptyView() }
+            NavigationLink(destination: TabBarView(),isActive: $loginViewModel.serverCompletion) { EmptyView() }
         }.navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
     }

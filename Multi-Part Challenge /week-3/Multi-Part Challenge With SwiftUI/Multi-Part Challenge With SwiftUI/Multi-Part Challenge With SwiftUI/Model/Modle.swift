@@ -14,12 +14,17 @@ struct registerBody: Codable {
     let password: String
 }
 
+struct favoritesBody: Codable {
+let products: [Int]
+}
+                                    
+                                    
 struct loginBody: Codable {
     let username: String
     let password: String
 }
 
-struct AccessToken: Decodable {
+struct AccessToken: Codable {
     let token: String?
     let type: String?
     let expire: Int?

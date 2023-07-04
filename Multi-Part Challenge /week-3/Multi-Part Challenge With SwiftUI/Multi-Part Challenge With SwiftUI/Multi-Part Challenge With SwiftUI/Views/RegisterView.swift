@@ -10,30 +10,7 @@ import Combine
 
 struct RegisterView: View {
     @StateObject private var registerViewModel = RegisterViewModel()
-//    @State private var valid = false
-      @State var login = false
-//    @State var showAlert = false
-//    @State var alertMessage = ""
-//    @State var showProgressView = false
-    //Define subscriber
-
-
-//    func isValid (){
-//        if !registerViewModel.isValidUsername(input: registerViewModel.userName) {
-//            alertMessage = "Invalid email format"
-//            showAlert = true
-//            return        }
-//        if !registerViewModel.isValidPassword(input: registerViewModel.password) {
-//            alertMessage = "Password must contains at least one lowercase ,uppercase ,digit, and special character (@, #, $, %, ^, &, +, =)"
-//            showAlert = true
-//            return
-//        }
-//        else  {
-//            showProgressView = true
-//            registerViewModel.fetchAccessToken()
-//            valid = true
-//        }
-//    }
+    @State var login = false
     
     var body: some View {
         NavigationStack {
@@ -43,22 +20,22 @@ struct RegisterView: View {
                     .foregroundColor(.black.opacity(0.8))
                     .padding()
                 TextField("First Name", text: $registerViewModel.firstName)
-                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                     .multilineTextAlignment(.center)
-                     .font(.headline)
-                 TextField("Last Name", text: $registerViewModel.lastName)
-                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                     .multilineTextAlignment(.center)
-                     .font(.headline)
-                 TextField("User Name (Email)", text: $registerViewModel.userName)
-                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                     .multilineTextAlignment(.center)
-                     .font(.headline)
-                 SecureField("Password", text: $registerViewModel.password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                     .multilineTextAlignment(.center)
-                     .font(.headline)
-
+                    .multilineTextAlignment(.center)
+                    .font(.headline)
+                TextField("Last Name", text: $registerViewModel.lastName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .multilineTextAlignment(.center)
+                    .font(.headline)
+                TextField("User Name (Email)", text: $registerViewModel.userName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .multilineTextAlignment(.center)
+                    .font(.headline)
+                SecureField("Password", text: $registerViewModel.password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .multilineTextAlignment(.center)
+                    .font(.headline)
+                
                 Button("Register") {
                     self.registerViewModel.isValid()
                 }
@@ -73,7 +50,7 @@ struct RegisterView: View {
             HStack{
                 Text("Already have an account ?")
                 Button("Login") {
-                     login = true
+                    login = true
                 }
             }
             .padding()
@@ -84,8 +61,9 @@ struct RegisterView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+            .padding(.top, 5)
             NavigationLink(destination: LoginView(),isActive: $login) { EmptyView() }
-            NavigationLink(destination:  CategoriesView(),isActive: $registerViewModel.serverCompletion) { EmptyView() }
+            NavigationLink(destination:  TabBarView(),isActive: $registerViewModel.serverCompletion) { EmptyView() }
         }.navigationTitle("Register")
             .navigationBarTitleDisplayMode(.inline)
     }

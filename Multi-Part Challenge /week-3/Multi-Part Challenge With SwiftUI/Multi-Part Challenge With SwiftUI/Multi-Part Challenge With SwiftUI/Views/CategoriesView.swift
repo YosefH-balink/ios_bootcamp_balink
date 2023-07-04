@@ -11,7 +11,7 @@ struct CategoriesView: View {
     @StateObject var categoriesViewModel = CategoriesViewModel.shared
     var body: some View {
         List(categoriesViewModel.categories, id: \.self) { category in
-            NavigationLink(destination: Products(categorie: category)) {
+            NavigationLink(destination: ProductsListView(categorie: category)) {
                 HStack {
                     Text(category.capitalized)
                         .font(.headline)
@@ -26,8 +26,6 @@ struct CategoriesView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-
 
 struct CategoriesView_Previews: PreviewProvider {
     static var previews: some View {

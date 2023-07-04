@@ -7,15 +7,14 @@
 
 import SwiftUI
 
-struct Products: View {
+struct ProductsListView: View {
     @StateObject var productsViewModel = ProductsViewModel()
     @State var categorie: String
    
     var body: some View {
         List(productsViewModel.products, id: \.self) { product in
             VStack {
-                Text(categorie)
-                ProductView(viewModel: productsViewModel, product: product)
+                SingelProductView(viewModel: productsViewModel, product: product)
             }
         }
         .listStyle(PlainListStyle())

@@ -10,24 +10,32 @@ import SwiftUI
 struct ProductsListView: View {
     @StateObject var productsViewModel = ProductsViewModel()
     @State var categorie: String
-   
     var body: some View {
-        List(productsViewModel.products, id: \.self) { product in
-            VStack {
-                SingelProductView(viewModel: productsViewModel, product: product)
+        VStack{
+            if categorie == "all"  {
+                SearchBarView(searchText: $productsViewModel.searchText)
+            }
+            List(productsViewModel.filteredProducts, id: \.self) { product in
+                VStack {
+                    SingelProductView(viewModel: productsViewModel, product: product)
+                }
             }
         }
-        .listStyle(PlainListStyle())
-        .navigationTitle("Products")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear{
-            productsViewModel.fetchProducts(categorie: self.categorie)
+        .onAppear {
+            if categorie == "favorites" {
+                productsViewModel.fetchFavoritesProducts()
+            } else if categorie == "all" {
+                productsViewModel.fetchAllProducts()
+            } else {
+                productsViewModel.fetchProducts(categorie: self.categorie)
+            }
         }
     }
+
 }
 
 //struct ShowProducts_Previews: PreviewProvider {
 //    static var previews: some View {
-//        Products()
+//        ProductsListView()
 //    }
 //}

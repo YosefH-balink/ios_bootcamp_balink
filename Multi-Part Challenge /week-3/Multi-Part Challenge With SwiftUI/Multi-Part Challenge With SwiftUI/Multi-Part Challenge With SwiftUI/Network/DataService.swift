@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 class DataService {
+    
     static var shared = DataService()
     
     func registerGetToken(firstname: String, lastname: String, username: String, password: String) -> AnyPublisher<String, Error> {
@@ -70,14 +71,15 @@ class DataService {
             .eraseToAnyPublisher()
     }
     
-    func getCategories(token: String) -> AnyPublisher<[String], Error> {
+    func getCategories() -> AnyPublisher<[String], Error> {
+        let token = UserDefaults.standard.string(forKey: "accessToken")
         guard let url = URL(string: "https://balink.onlink.dev/categories") else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(token, forHTTPHeaderField: "Authorization")
+        request.addValue(token ?? "", forHTTPHeaderField: "Authorization")
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response in
                 guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
@@ -95,14 +97,15 @@ class DataService {
     }
     
     
-    func getProductsForCategorie(token: String, categorie: String) -> AnyPublisher<[Product], Error> {
+    func getProductsForCategorie(categorie: String) -> AnyPublisher<[Product], Error> {
+        let token = UserDefaults.standard.string(forKey: "accessToken")
         guard let url = URL(string: "https://balink.onlink.dev/categories/\(categorie)") else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(token, forHTTPHeaderField: "Authorization")
+        request.addValue(token ?? "", forHTTPHeaderField: "Authorization")
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response in
                 guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
@@ -119,16 +122,41 @@ class DataService {
             .eraseToAnyPublisher()
     }
    
-    func getFavoriteProducts(token: String, favorites: [String]) -> AnyPublisher<[Product], Error> {
-        guard let url = URL(string: "https://balink.onlink.dev/favorites") else {
+    func getFavoritesProducts() -> AnyPublisher<[Product], Error> {
+        let token = UserDefaults.standard.string(forKey: "accessToken")
+        guard let url = URL(string: "https://balink.onlink.dev/products/ids") else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-        let body = favoritesBody(products: UserDefaults.standard.array(forKey: "favoriteProducts")as? [Int] ?? [])
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(token ?? "", forHTTPHeaderField: "Authorization")
+        request.httpBody = try? JSONSerialization.data(withJSONObject: ["products": UserDefaults.standard.array(forKey: "favoriteProducts")as? [Int] ?? []])
+        print("request.httpBody----->",   request.httpBody! )
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { data, response in
+                guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+                    let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
+                    throw NSError(domain: errorResponse.code, code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
+                }
+                return data
+            }
+            .decode(type: [Product].self, decoder: JSONDecoder())
+            .map { products -> [Product] in
+                return products
+            }
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func getAllProducts() -> AnyPublisher<[Product], Error> {
+        let token = UserDefaults.standard.string(forKey: "accessToken")
+        guard let url = URL(string: "https://balink.onlink.dev/products") else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(token, forHTTPHeaderField: "Authorization")
-        request.httpBody = try? JSONEncoder().encode(body)
+        request.addValue(token ?? "", forHTTPHeaderField: "Authorization")
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response in
                 guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
@@ -145,30 +173,5 @@ class DataService {
             .eraseToAnyPublisher()
     }
 }
-//    func getProducts(token: String) -> AnyPublisher<[Product], Error> {
-//        guard let url = URL(string: "https://balink.onlink.dev/products") else {
-//            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
-//        }
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "GET"
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.addValue(token, forHTTPHeaderField: "Authorization")
-//        return URLSession.shared.dataTaskPublisher(for: request)
-//            .tryMap { data, response in
-//                // throw error when bad server response is received
-//                guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
-//                    let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
-//                    throw NSError(domain: errorResponse.code, code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
-//                }
-//                return data
-//            }
-//            .decode(type: [Product].self, decoder: JSONDecoder())
-//            .map { products -> [Product] in
-//               // print("products---->", products)
-//                return products
-//            }
-//            .receive(on: RunLoop.main)
-//            .eraseToAnyPublisher()
-//    }
-  
+
 

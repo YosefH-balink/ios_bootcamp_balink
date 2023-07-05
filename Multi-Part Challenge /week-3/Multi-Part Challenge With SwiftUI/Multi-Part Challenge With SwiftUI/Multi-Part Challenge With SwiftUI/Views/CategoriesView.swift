@@ -21,9 +21,9 @@ struct CategoriesView: View {
                 .frame(maxWidth: .infinity)
             }
         }
-        .listStyle(PlainListStyle())
-        .navigationTitle("Categories")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitle("")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 

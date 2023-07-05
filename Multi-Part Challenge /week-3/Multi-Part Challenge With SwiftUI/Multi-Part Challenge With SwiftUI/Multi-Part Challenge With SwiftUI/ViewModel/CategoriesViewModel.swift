@@ -20,7 +20,7 @@ class CategoriesViewModel: ObservableObject{
     }
 
     func fetchCategories(){
-        observer = dataService.getCategories(token: UserDefaults.standard.string(forKey: "accessToken") ?? "")
+        observer = dataService.getCategories()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {

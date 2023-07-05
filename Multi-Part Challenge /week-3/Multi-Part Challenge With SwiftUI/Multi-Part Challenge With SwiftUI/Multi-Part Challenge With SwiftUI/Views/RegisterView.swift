@@ -35,7 +35,6 @@ struct RegisterView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .multilineTextAlignment(.center)
                     .font(.headline)
-                
                 Button("Register") {
                     self.registerViewModel.isValid()
                 }
@@ -64,8 +63,10 @@ struct RegisterView: View {
             .padding(.top, 5)
             NavigationLink(destination: LoginView(),isActive: $login) { EmptyView() }
             NavigationLink(destination:  TabBarView(),isActive: $registerViewModel.serverCompletion) { EmptyView() }
-        }.navigationTitle("Register")
-            .navigationBarTitleDisplayMode(.inline)
+        }
+        .navigationBarTitle("")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 

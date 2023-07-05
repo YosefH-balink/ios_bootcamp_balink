@@ -34,8 +34,8 @@ struct SingelProductView: View {
                     .lineLimit(5)
             }
             VStack() {
-                Image(systemName: viewModel.isFavorite(productId: product.id ?? 0) ? "heart.fill" : "heart")
-                    .foregroundColor(viewModel.isFavorite(productId: product.id ?? 0) ? .red : .gray)
+                Image(systemName: viewModel.isFavorite(productId: product.id ?? 0) ? "star.fill" : "star")
+                    .foregroundColor(viewModel.isFavorite(productId: product.id ?? 0) ? .yellow : .gray)
                     .onTapGesture {
                         viewModel.toggleFavorite(productId: product.id ?? 0)
                     }

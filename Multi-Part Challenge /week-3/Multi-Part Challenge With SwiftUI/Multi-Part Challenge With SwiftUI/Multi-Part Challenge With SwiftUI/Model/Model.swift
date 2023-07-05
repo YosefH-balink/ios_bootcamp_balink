@@ -13,12 +13,7 @@ struct registerBody: Codable {
     let username: String
     let password: String
 }
-
-struct favoritesBody: Codable {
-let products: [Int]
-}
-                                    
-                                    
+                                  
 struct loginBody: Codable {
     let username: String
     let password: String

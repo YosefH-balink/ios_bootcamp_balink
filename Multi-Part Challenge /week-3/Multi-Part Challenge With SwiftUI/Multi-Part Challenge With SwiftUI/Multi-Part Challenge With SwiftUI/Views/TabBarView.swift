@@ -15,13 +15,20 @@ struct TabBarView: View {
                     Image(systemName: "list.bullet")
                     Text("Categories")
                 }
-            RegisterView()
+            ProductsListView(categorie: "favorites")
                 .tabItem{
-                    Image(systemName: "rectangle.portrait.and.arrow.right")
-                    Text("Logout")
+                    Image(systemName: "star.fill")
+                    
+                    Text("Favorites")
+                }
+            ProductsListView(categorie: "all")
+                .tabItem{
+                    Image(systemName: "magnifyingglass")
+                    
+                    Text("Search All Products")
                 }
         }
-        .navigationTitle("jjhhghgjjj")
+        .accentColor(Color.yellow)
     }
 }
 

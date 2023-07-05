@@ -45,8 +45,10 @@ struct LoginView: View {
                 )
             }
             NavigationLink(destination: TabBarView(),isActive: $loginViewModel.serverCompletion) { EmptyView() }
-        }.navigationTitle("Login")
-            .navigationBarTitleDisplayMode(.inline)
+        }
+        .navigationBarTitle("")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 

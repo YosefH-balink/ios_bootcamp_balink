@@ -14,7 +14,6 @@ class InputValidation {
     
     func isValid(firstName: String? = nil, lastName: String? = nil,
                  userName: String,password: String) {
-        
         if let firstName = firstName, let lastName = lastName {
             if !self.isValidInput(input: firstName) {
                 self.errorMessage = "First Name requires A minimum length of 2 characters"

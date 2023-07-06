@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct registerBody: Codable {
+struct RegisterBody: Codable {
     let firstname: String
     let lastname: String
     let username: String
     let password: String
 }
                                   
-struct loginBody: Codable {
+struct LoginBody: Codable {
     let username: String
     let password: String
 }
@@ -45,4 +45,10 @@ struct Product: Codable, Identifiable, Hashable {
     let category: String?
     let thumbnail: URL?
     let images: [URL]?
+}
+
+enum ProductsList {
+    case favorites
+    case all
+    case category
 }

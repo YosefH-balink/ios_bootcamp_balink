@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ProductsListView: View {
     @StateObject var productsViewModel = ProductsViewModel()
-    @State var categorie: String
+    @State var category: String?
+    @State var products: ProductsList
     var body: some View {
         VStack{
-            if categorie == "all"  {
+            if category == "all"  {
                 SearchBarView(searchText: $productsViewModel.searchText)
             }
             List(productsViewModel.filteredProducts, id: \.self) { product in
@@ -22,12 +23,13 @@ struct ProductsListView: View {
             }
         }
         .onAppear {
-            if categorie == "favorites" {
-                productsViewModel.fetchFavoritesProducts()
-            } else if categorie == "all" {
-                productsViewModel.fetchAllProducts()
-            } else {
-                productsViewModel.fetchProducts(categorie: self.categorie)
+            switch products {
+            case .all:
+                productsViewModel.fetchProducts(products: .all, category: nil)
+            case .favorites:
+                productsViewModel.fetchProducts(products: .favorites, category: nil)
+            case .category:
+                productsViewModel.fetchProducts(products: .category, category: self.category)
             }
         }
     }

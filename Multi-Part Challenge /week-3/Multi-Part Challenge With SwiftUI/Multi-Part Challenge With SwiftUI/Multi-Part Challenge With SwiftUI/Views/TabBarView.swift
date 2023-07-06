@@ -15,16 +15,14 @@ struct TabBarView: View {
                     Image(systemName: "list.bullet")
                     Text("Categories")
                 }
-            ProductsListView(categorie: "favorites")
+            ProductsListView(products: .favorites)
                 .tabItem{
                     Image(systemName: "star.fill")
-                    
                     Text("Favorites")
                 }
-            ProductsListView(categorie: "all")
+            ProductsListView(products: .all)
                 .tabItem{
                     Image(systemName: "magnifyingglass")
-                    
                     Text("Search All Products")
                 }
         }

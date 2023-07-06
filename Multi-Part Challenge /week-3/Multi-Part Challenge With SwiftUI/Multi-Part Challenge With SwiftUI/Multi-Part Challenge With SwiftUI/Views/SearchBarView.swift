@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct SearchBarView: View {
     @Binding var searchText: String
     @StateObject var productsViewModel = ProductsViewModel()
@@ -19,14 +18,9 @@ struct SearchBarView: View {
                     .background(Color(.systemGray5))
                     .cornerRadius(8)
                     .padding(.horizontal, 8)
-
-                Button(action: {
-                    
-                }) {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(Color(.systemGray))
-                        .padding(8)
-                }
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(Color(.systemGray))
+                    .padding(8)
             }
             .frame(height: 40)
             .padding(.horizontal)

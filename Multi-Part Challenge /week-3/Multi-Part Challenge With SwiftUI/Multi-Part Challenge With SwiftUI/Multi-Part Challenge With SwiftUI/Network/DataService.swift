@@ -16,7 +16,7 @@ class DataService {
         guard let url = URL(string: "https://balink.onlink.dev/users/register") else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-        let body = registerBody(firstname: firstname, lastname: lastname, username: username, password: password)
+        let body = RegisterBody(firstname: firstname, lastname: lastname, username: username, password: password)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -46,7 +46,7 @@ class DataService {
         guard let url = URL(string: "https://balink.onlink.dev/users/login") else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-        let body = loginBody(username: username, password: password)
+        let body = LoginBody(username: username, password: password)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")

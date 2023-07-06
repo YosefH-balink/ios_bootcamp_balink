@@ -9,16 +9,14 @@ import Foundation
 import Combine
 
 class LoginViewModel: ObservableObject {
-    let dataService = DataService.shared
-    let inputValidation = InputValidation()
-    private var cancellables = Set<AnyCancellable>()
     @Published var userName = ""
     @Published var password = ""
     @Published var serverCompletion = false
     @Published var failure = false
-   // @Published var errorCode = ""
     @Published var errorMessage = ""
-   // @Published var errorStatus = 0
+    let dataService = DataService.shared
+    let inputValidation = InputValidation()
+    private var cancellables = Set<AnyCancellable>()
     
     func isValid() {
         inputValidation.isValid(userName: userName,password: password)
@@ -36,23 +34,18 @@ class LoginViewModel: ObservableObject {
                 switch completion {
                 case .finished:
                     self.serverCompletion = true
-                    print("serverCompletion--->", self.serverCompletion)
-                    print(completion)  // prints finished
+                   // print(completion)  // prints finished
                     break
                 case .failure(let error):
                     self.failure = true
                     if let urlError = error as? NSError {
-                        //self.errorCode = urlError.domain
                         self.errorMessage = urlError.localizedDescription
-                       // self.errorStatus = urlError.code
                         print("Error status: \(urlError.code)")
                         print("Error code: \(urlError.domain)")
                         print("Error message: \(urlError.localizedDescription)")
-                        print("Error status: \(urlError.code)")
                     }
                 }
             }, receiveValue: { accessToken in
-               print("accessToken--->",accessToken)
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
             })
             .store(in: &cancellables)

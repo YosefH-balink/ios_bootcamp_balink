@@ -15,7 +15,7 @@ class ProductsViewModel: ObservableObject {
     let userDefaults = UserDefaults.standard
     
     init(){
-        myFavoriteProducts = UserDefaults.standard.array(forKey: "favoriteProducts") as? [Int] ?? []
+        myFavoriteProducts = userDefaults.array(forKey: "favoriteProducts") as? [Int] ?? []
         subscriber = $searchText
             .sink(receiveValue: { search in
                 if self.searchText.isEmpty {
@@ -25,7 +25,7 @@ class ProductsViewModel: ObservableObject {
                 }
             })
     }
-  
+    
     func toggleFavorite(productId: Int) {
         if self.myFavoriteProducts.contains(productId) {
             self.myFavoriteProducts.removeAll { id in
@@ -42,33 +42,11 @@ class ProductsViewModel: ObservableObject {
         return self.myFavoriteProducts.contains(productId)
     }
     
-    let dataService = DataService.shared
+    var dataService = DataService.shared
     var observer: AnyCancellable?
     
-    func fetchFavoritesProducts(){
-        observer = dataService.getFavoritesProducts()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    print(completion)  // prints finished
-                    break
-                case .failure(let error):
-                    if let urlError = error as? NSError {
-                        print("Error code: \(urlError.domain)")
-                        print("Error message: \(urlError.localizedDescription)")
-                        print("Error status: \(urlError.code)")
-                    }
-                }
-            }, receiveValue: { [weak self] products in
-                self?.products = products
-                self?.filteredProducts = products
-            })
-    }
-  
-    
-    func fetchAllProducts(){
-        observer = dataService.getAllProducts()
+    func fetchProducts(products: ProductsList, category: String?) {
+        observer = fetchData(products: products, category: category)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -88,25 +66,15 @@ class ProductsViewModel: ObservableObject {
             })
     }
     
-    func fetchProducts(categorie: String){
-        observer = dataService.getProductsForCategorie(categorie: categorie)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    print(completion)  // prints finished
-                    break
-                case .failure(let error):
-                    if let urlError = error as? NSError {
-                        print("Error code: \(urlError.domain)")
-                        print("Error message: \(urlError.localizedDescription)")
-                        print("Error status: \(urlError.code)")
-                    }
-                }
-            }, receiveValue: { [weak self] products in
-                self?.products = products
-                self?.filteredProducts = products
-            })
+    private func fetchData(products: ProductsList, category: String?) -> AnyPublisher<[Product], Error> {
+        switch products {
+        case .all:
+            return dataService.getAllProducts()
+        case .favorites:
+            return dataService.getFavoritesProducts()
+        case .category:
+            return dataService.getProductsForCategorie(categorie: category ?? "")
+        }
     }
     
 }

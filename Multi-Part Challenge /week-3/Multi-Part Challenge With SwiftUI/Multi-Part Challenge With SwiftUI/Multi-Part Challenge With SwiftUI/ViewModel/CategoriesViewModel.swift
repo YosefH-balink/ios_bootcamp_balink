@@ -9,23 +9,22 @@ import Foundation
 import Combine
 
 class CategoriesViewModel: ObservableObject{
-    static var shared = CategoriesViewModel()
-    var observer: AnyCancellable?
-    let dataService = DataService.shared
     @Published var categories :[String] = []
-   
-   
+    static var shared = CategoriesViewModel()
+    let dataService = DataService.shared
+    var observer: AnyCancellable?
+    
     init() {
         fetchCategories()
     }
-
+    
     func fetchCategories(){
         observer = dataService.getCategories()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
-                   print(completion)  // prints finished
+                    // print(completion)  // prints finished
                     break
                 case .failure(let error):
                     if let urlError = error as? NSError {
@@ -38,6 +37,4 @@ class CategoriesViewModel: ObservableObject{
                 self?.categories = categories
             })
     }
-    
-    
 }

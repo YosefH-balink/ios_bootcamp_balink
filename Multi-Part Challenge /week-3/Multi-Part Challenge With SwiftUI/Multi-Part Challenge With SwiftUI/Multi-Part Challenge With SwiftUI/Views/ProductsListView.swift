@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ProductsListView: View {
-    @StateObject var productsViewModel = ProductsViewModel()
+    @StateObject var productsViewModel = ProductsListViewModel()
     @State var category: String?
-    @State var products: ProductsList
+    @State var productsListType: ProductsListType
     var body: some View {
         VStack{
-            if products == .all  {
+            if productsListType == .all  {
                 SearchBarView(searchText: $productsViewModel.searchText)
             }
             List(productsViewModel.filteredProducts, id: \.self) { product in
                 VStack {
-                    SingelProductView(viewModel: productsViewModel, product: product)
+                    SingelProductView(viewModel: productsViewModel, product: product, productsListType: self.productsListType)
                 }
             }
         }
         .onAppear {
-            switch products {
+            switch productsListType {
             case .all:
                 productsViewModel.getProducts(products: .all, category: nil)
             case .favorites:

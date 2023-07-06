@@ -6,11 +6,12 @@
 
 import Foundation
 import Combine
-class ProductsViewModel: ObservableObject {
-    @Published var myFavoriteProducts: [Int] = []
+
+class ProductsListViewModel: ObservableObject {
     @Published var products :[Product] = []
-    @Published var searchText = ""
     @Published var filteredProducts :[Product] = []
+    @Published var myFavoriteProducts: [Int] = []
+    @Published var searchText = ""
     private var subscriber: AnyCancellable?
     let userDefaults = UserDefaults.standard
     
@@ -45,13 +46,12 @@ class ProductsViewModel: ObservableObject {
     var dataService = DataService.shared
     var observer: AnyCancellable?
     
-    func getProducts(products: ProductsList, category: String?) {
+    func getProducts(products: ProductsListType, category: String?) {
         observer = fetchData(products: products, category: category)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
-                    print(completion)  // prints finished
                     break
                 case .failure(let error):
                     if let urlError = error as? NSError {
@@ -66,7 +66,7 @@ class ProductsViewModel: ObservableObject {
             })
     }
     
-    private func fetchData(products: ProductsList, category: String?) -> AnyPublisher<[Product], Error> {
+    private func fetchData(products: ProductsListType, category: String?) -> AnyPublisher<[Product], Error> {
         switch products {
         case .all:
             return dataService.fetchProducts( products: .all)

@@ -47,7 +47,7 @@ struct Product: Codable, Identifiable, Hashable {
     let images: [URL]?
 }
 
-enum ProductsList {
+enum ProductsListType {
     case favorites
     case all
     case category

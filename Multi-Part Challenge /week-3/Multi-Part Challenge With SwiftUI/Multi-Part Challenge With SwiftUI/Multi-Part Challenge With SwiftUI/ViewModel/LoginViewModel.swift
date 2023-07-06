@@ -34,7 +34,6 @@ class LoginViewModel: ObservableObject {
                 switch completion {
                 case .finished:
                     self.serverCompletion = true
-                   // print(completion)  // prints finished
                     break
                 case .failure(let error):
                     self.failure = true

@@ -24,7 +24,6 @@ class CategoriesViewModel: ObservableObject{
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
-                    // print(completion)  // prints finished
                     break
                 case .failure(let error):
                     if let urlError = error as? NSError {

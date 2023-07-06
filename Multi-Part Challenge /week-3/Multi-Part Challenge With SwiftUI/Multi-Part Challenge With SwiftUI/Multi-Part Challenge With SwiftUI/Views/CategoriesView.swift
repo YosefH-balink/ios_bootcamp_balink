@@ -11,7 +11,7 @@ struct CategoriesView: View {
     @StateObject var categoriesViewModel = CategoriesViewModel.shared
     var body: some View {
         List(categoriesViewModel.categories, id: \.self) { category in
-            NavigationLink(destination: ProductsListView(category: category, products: .category)) {
+            NavigationLink(destination: ProductsListView(category: category, productsListType: .category)) {
                 HStack {
                     Text(category.capitalized)
                         .font(.headline)

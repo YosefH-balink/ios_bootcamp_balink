@@ -7,9 +7,9 @@
 import SwiftUI
 
 struct SingelProductView: View {
-    @ObservedObject var viewModel: ProductsViewModel
+    @ObservedObject var viewModel: ProductsListViewModel
     let product: Product
-    
+    let productsListType: ProductsListType
     var body: some View {
         HStack(spacing: 10) {
             AsyncImage(url: product.thumbnail) { image in
@@ -37,6 +37,15 @@ struct SingelProductView: View {
                 Image(systemName: viewModel.isFavorite(productId: product.id ?? 0) ? "star.fill" : "star")
                     .foregroundColor(viewModel.isFavorite(productId: product.id ?? 0) ? .yellow : .gray)
                     .onTapGesture {
+                        if productsListType == .favorites {
+                            viewModel.toggleFavorite(productId: product.id ?? 0)
+                            if let index = viewModel.filteredProducts.firstIndex(of: product) {
+                                withAnimation {
+                                    viewModel.filteredProducts.remove(at: index)
+                                }
+                            }
+                            return
+                        }
                         viewModel.toggleFavorite(productId: product.id ?? 0)
                     }
                     .font(.title)

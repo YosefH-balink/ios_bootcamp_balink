@@ -15,15 +15,15 @@ struct TabBarView: View {
                     Image(systemName: "list.bullet")
                     Text("Categories")
                 }
-            ProductsListView(products: .favorites)
+            ProductsListView(productsListType: .favorites)
                 .tabItem{
                     Image(systemName: "star.fill")
                     Text("Favorites")
                 }
-            ProductsListView(products: .all)
+            ProductsListView(productsListType: .all)
                 .tabItem{
                     Image(systemName: "magnifyingglass")
-                    Text("Search All Products")
+                    Text("All Products")
                 }
         }
         .accentColor(Color.yellow)

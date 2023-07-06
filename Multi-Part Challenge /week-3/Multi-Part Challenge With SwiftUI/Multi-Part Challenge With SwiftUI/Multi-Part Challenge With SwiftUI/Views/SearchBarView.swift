@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchBarView: View {
     @Binding var searchText: String
-    @StateObject var productsViewModel = ProductsViewModel()
+    @StateObject var productsViewModel = ProductsListViewModel()
     var body: some View {
         VStack {
             HStack {

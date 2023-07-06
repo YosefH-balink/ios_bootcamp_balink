@@ -13,7 +13,7 @@ struct ProductsListView: View {
     @State var products: ProductsList
     var body: some View {
         VStack{
-            if category == "all"  {
+            if products == .all  {
                 SearchBarView(searchText: $productsViewModel.searchText)
             }
             List(productsViewModel.filteredProducts, id: \.self) { product in
@@ -25,11 +25,11 @@ struct ProductsListView: View {
         .onAppear {
             switch products {
             case .all:
-                productsViewModel.fetchProducts(products: .all, category: nil)
+                productsViewModel.getProducts(products: .all, category: nil)
             case .favorites:
-                productsViewModel.fetchProducts(products: .favorites, category: nil)
+                productsViewModel.getProducts(products: .favorites, category: nil)
             case .category:
-                productsViewModel.fetchProducts(products: .category, category: self.category)
+                productsViewModel.getProducts(products: .category, category: self.category)
             }
         }
     }

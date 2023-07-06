@@ -52,3 +52,14 @@ enum ProductsList {
     case all
     case category
 }
+
+enum TokenRequestType: String {
+case register = "register"
+case login = "login"
+}
+
+enum ProductsRequestType: String {
+case all = "products"
+case byCategory = "categories/"
+case favorites = "products/ids"
+}

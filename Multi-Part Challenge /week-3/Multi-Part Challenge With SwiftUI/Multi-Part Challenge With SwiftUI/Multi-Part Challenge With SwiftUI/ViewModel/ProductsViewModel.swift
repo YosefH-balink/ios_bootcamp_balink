@@ -45,7 +45,7 @@ class ProductsViewModel: ObservableObject {
     var dataService = DataService.shared
     var observer: AnyCancellable?
     
-    func fetchProducts(products: ProductsList, category: String?) {
+    func getProducts(products: ProductsList, category: String?) {
         observer = fetchData(products: products, category: category)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -69,11 +69,11 @@ class ProductsViewModel: ObservableObject {
     private func fetchData(products: ProductsList, category: String?) -> AnyPublisher<[Product], Error> {
         switch products {
         case .all:
-            return dataService.getAllProducts()
+            return dataService.fetchProducts( products: .all)
         case .favorites:
-            return dataService.getFavoritesProducts()
+            return dataService.fetchProducts(products: .favorites)
         case .category:
-            return dataService.getProductsForCategorie(categorie: category ?? "")
+            return dataService.fetchProducts(categorie: category ?? "", products: .byCategory)
         }
     }
     

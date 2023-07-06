@@ -8,8 +8,8 @@
 import Foundation
 
 struct RegisterBody: Codable {
-    let firstname: String
-    let lastname: String
+    let firstname: String?
+    let lastname: String?
     let username: String
     let password: String
 }

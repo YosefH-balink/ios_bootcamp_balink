@@ -29,7 +29,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func fetchAccessToken(){
-        dataService.loginGetToken(username: userName, password: password)
+        dataService.getToken(username: userName, password: password, requestType: .login)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:

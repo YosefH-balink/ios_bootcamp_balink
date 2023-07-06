@@ -33,7 +33,7 @@ class RegisterViewModel: ObservableObject {
     }
     
     func fetchAccessToken(){
-        dataService.registerGetToken(firstname: firstName, lastname: lastName, username: userName, password: password)
+        dataService.getToken(firstname: firstName, lastname: lastName, username: userName, password: password, requestType: .register)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:

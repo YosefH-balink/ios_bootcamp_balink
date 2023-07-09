@@ -37,7 +37,9 @@ struct RegisterView: View {
                     .font(.headline)
                 Button("Register") {
                     self.registerViewModel.isValid()
-                    register = true
+                    if  !registerViewModel.failure {
+                        register = true
+                    }
                 }
                 .font(.headline)
                 .foregroundColor(.white)

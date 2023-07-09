@@ -27,8 +27,10 @@ struct LoginView: View {
                     .multilineTextAlignment(.center)
                     .font(.headline)
                 Button("Login") {
-                    login = true
                     loginViewModel.isValid()
+                    if  !loginViewModel.failure {
+                        login = true
+                    }
                 }
                 .font(.headline)
                 .foregroundColor(.white)

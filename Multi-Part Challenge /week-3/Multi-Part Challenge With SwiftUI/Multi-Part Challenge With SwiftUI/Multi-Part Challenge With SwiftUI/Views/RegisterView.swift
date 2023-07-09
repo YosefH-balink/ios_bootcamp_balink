@@ -11,7 +11,7 @@ import Combine
 struct RegisterView: View {
     @StateObject private var registerViewModel = RegisterViewModel()
     @State var login = false
-    
+    @State var register = false
     var body: some View {
         NavigationStack {
             VStack {
@@ -37,6 +37,7 @@ struct RegisterView: View {
                     .font(.headline)
                 Button("Register") {
                     self.registerViewModel.isValid()
+                    register = true
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -45,6 +46,9 @@ struct RegisterView: View {
                 .background(Color.cyan)
                 .cornerRadius(10)
                 .padding(.top, 20)
+            }
+            if register {
+                ProgressView()
             }
             HStack{
                 Text("Already have an account ?")
@@ -69,7 +73,6 @@ struct RegisterView: View {
         .navigationBarHidden(true)
     }
 }
-
 
 
 struct ContentView_Previews: PreviewProvider {

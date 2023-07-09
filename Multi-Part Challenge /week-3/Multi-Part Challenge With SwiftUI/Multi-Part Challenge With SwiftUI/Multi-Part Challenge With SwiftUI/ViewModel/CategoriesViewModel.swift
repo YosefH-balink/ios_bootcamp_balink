@@ -11,7 +11,7 @@ import Combine
 class CategoriesViewModel: ObservableObject{
     @Published var categories :[String] = []
     static var shared = CategoriesViewModel()
-    let dataService = DataService.shared
+    let dataService = CategoriesAPI.shared
     var observer: AnyCancellable?
     
     init() {
@@ -24,6 +24,7 @@ class CategoriesViewModel: ObservableObject{
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
+                    print("fetchCategories----->", completion)
                     break
                 case .failure(let error):
                     if let urlError = error as? NSError {

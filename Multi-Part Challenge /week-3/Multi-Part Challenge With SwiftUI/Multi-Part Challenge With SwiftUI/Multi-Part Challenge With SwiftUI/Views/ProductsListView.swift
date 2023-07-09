@@ -33,7 +33,6 @@ struct ProductsListView: View {
             }
         }
     }
-
 }
 
 //struct ShowProducts_Previews: PreviewProvider {

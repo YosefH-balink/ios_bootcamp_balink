@@ -3,14 +3,14 @@
 //  Multi-Part Challenge With SwiftUI
 //
 //  Created by Balink on 02/07/2023.
-//
+
 
 import SwiftUI
 import Combine
 
 struct LoginView: View {
     @StateObject var loginViewModel = LoginViewModel()
-
+    @State var login = false
     var body: some View {
         NavigationStack {
             VStack {
@@ -18,15 +18,16 @@ struct LoginView: View {
                     .font(.title)
                     .foregroundColor(.black.opacity(0.8))
                     .padding()
-                 TextField("User Name (Email)", text: $loginViewModel.userName)
-                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                     .multilineTextAlignment(.center)
-                     .font(.headline)
-                 SecureField("Password", text: $loginViewModel.password)
-                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                     .multilineTextAlignment(.center)
-                     .font(.headline)
+                TextField("User Name (Email)", text: $loginViewModel.userName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .multilineTextAlignment(.center)
+                    .font(.headline)
+                SecureField("Password", text: $loginViewModel.password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .multilineTextAlignment(.center)
+                    .font(.headline)
                 Button("Login") {
+                    login = true
                     loginViewModel.isValid()
                 }
                 .font(.headline)
@@ -43,6 +44,9 @@ struct LoginView: View {
                     message: Text(loginViewModel.errorMessage),
                     dismissButton: .default(Text("OK"))
                 )
+            }
+            if login {
+                ProgressView()
             }
             NavigationLink(destination: TabBarView(),isActive: $loginViewModel.serverCompletion) { EmptyView() }
         }

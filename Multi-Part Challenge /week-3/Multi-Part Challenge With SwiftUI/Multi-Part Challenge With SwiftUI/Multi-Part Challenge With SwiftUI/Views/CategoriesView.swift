@@ -9,17 +9,26 @@ import SwiftUI
 
 struct CategoriesView: View {
     @StateObject var categoriesViewModel = CategoriesViewModel.shared
+    
     var body: some View {
-        List(categoriesViewModel.categories, id: \.self) { category in
-            NavigationLink(destination: ProductsListView(category: category, productsListType: .category)) {
-                HStack {
-                    Text(category.capitalized)
-                        .font(.headline)
-                    Spacer()
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                ForEach(categoriesViewModel.categories, id: \.self) { category in
+                    NavigationLink(destination: ProductsListView(category: category, productsListType: .category)) {
+                        VStack(spacing: 8) {
+                            Text(category.capitalized)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                                .frame(maxWidth: .infinity, minHeight: 75)
+                                .padding(10)
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(8)
+                        }
+                    }
                 }
-                .padding(.vertical, 8)
-                .frame(maxWidth: .infinity)
             }
+            .padding(16)
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)

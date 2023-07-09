@@ -28,25 +28,35 @@ class ProductsListViewModel: ObservableObject {
     }
     
     func toggleFavorite(productId: Int) {
+        self.myFavoriteProducts = userDefaults.array(forKey: "favoriteProducts") as? [Int] ?? []
         if self.myFavoriteProducts.contains(productId) {
             self.myFavoriteProducts.removeAll { id in
                 id == productId
             }
             userDefaults.set(self.myFavoriteProducts, forKey: "favoriteProducts")
+            self.myFavoriteProducts = userDefaults.array(forKey: "favoriteProducts") as? [Int] ?? []
         } else {
             self.myFavoriteProducts.append(productId)
             userDefaults.set(self.myFavoriteProducts, forKey: "favoriteProducts")
+            self.myFavoriteProducts = userDefaults.array(forKey: "favoriteProducts") as? [Int] ?? []
         }
     }
     
     func isFavorite(productId: Int) -> Bool {
-        return self.myFavoriteProducts.contains(productId)
+        let favoriteProducts = userDefaults.array(forKey: "favoriteProducts") as? [Int] ?? []
+        return favoriteProducts.contains(productId)
     }
     
-    var dataService = DataService.shared
+    var dataService = ProductsAPI.shared
     var observer: AnyCancellable?
     
     func getProducts(products: ProductsListType, category: String?) {
+        let favoriteProducts = userDefaults.array(forKey: "favoriteProducts") as? [Int] ?? []
+        if products == .favorites && favoriteProducts.isEmpty  {
+            print(favoriteProducts.isEmpty)
+            filteredProducts = []
+            return
+        }
         observer = fetchData(products: products, category: category)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -76,7 +86,6 @@ class ProductsListViewModel: ObservableObject {
             return dataService.fetchProducts(categorie: category ?? "", products: .byCategory)
         }
     }
-    
 }
     
 

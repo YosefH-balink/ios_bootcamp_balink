@@ -37,26 +37,25 @@ struct SingelProductView: View {
                 Image(systemName: viewModel.isFavorite(productId: product.id ?? 0) ? "star.fill" : "star")
                     .foregroundColor(viewModel.isFavorite(productId: product.id ?? 0) ? .yellow : .gray)
                     .onTapGesture {
+                        viewModel.toggleFavorite(productId: product.id ?? 0)
                         if productsListType == .favorites {
-                            viewModel.toggleFavorite(productId: product.id ?? 0)
                             if let index = viewModel.filteredProducts.firstIndex(of: product) {
                                 withAnimation {
                                     viewModel.filteredProducts.remove(at: index)
                                 }
                             }
-                            return
                         }
-                        viewModel.toggleFavorite(productId: product.id ?? 0)
                     }
                     .font(.title)
                     .padding(.top)
-                    Spacer()
+                Spacer()
                 Text("\(product.price ?? 0)$")
                     .font(.headline)
                     .foregroundColor(.blue)
                     .padding(.bottom)
             }
         }
+        .frame(maxWidth: .infinity)
         .padding(5)
         .background(Color.white)
         .cornerRadius(10)

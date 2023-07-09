@@ -14,12 +14,13 @@ class LoginViewModel: ObservableObject {
     @Published var serverCompletion = false
     @Published var failure = false
     @Published var errorMessage = ""
-    let dataService = DataService.shared
+    let dataService = Register_LoginAPI.shared
     let inputValidation = InputValidation()
     private var cancellables = Set<AnyCancellable>()
     
     func isValid() {
         inputValidation.isValid(userName: userName,password: password)
+        //inputValidation.isValid(userName: "1@1.com", password: "qwerT")// for testing
         if !inputValidation.isInputValid {
             self.errorMessage = inputValidation.errorMessage
             self.failure = true
@@ -30,10 +31,12 @@ class LoginViewModel: ObservableObject {
     
     func fetchAccessToken(){
         dataService.getToken(username: userName, password: password, requestType: .login)
+       // dataService.getToken(username: "1@1.com", password: "qwerT", requestType: .login)// for testing
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
                     self.serverCompletion = true
+                    print("Login----->", completion)
                     break
                 case .failure(let error):
                     self.failure = true
@@ -49,6 +52,5 @@ class LoginViewModel: ObservableObject {
             })
             .store(in: &cancellables)
     }
-
 }
 

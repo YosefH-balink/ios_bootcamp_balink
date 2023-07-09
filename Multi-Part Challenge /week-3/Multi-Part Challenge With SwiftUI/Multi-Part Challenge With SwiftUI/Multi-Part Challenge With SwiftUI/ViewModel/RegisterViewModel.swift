@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 class RegisterViewModel: ObservableObject {
-    let dataService = DataService.shared
+    let dataService = Register_LoginAPI.shared
     let inputValidation = InputValidation()
     private var cancellables = Set<AnyCancellable>()
     @Published var firstName = ""
@@ -38,7 +38,7 @@ class RegisterViewModel: ObservableObject {
                 switch completion {
                 case .finished:
                     self.serverCompletion = true
-                    // print(completion)  // prints finished
+                    print("Register-->", completion)
                     break
                 case .failure(let error):
                     if let urlError = error as? NSError {

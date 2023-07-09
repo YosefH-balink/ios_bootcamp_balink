@@ -38,7 +38,6 @@ class RegisterViewModel: ObservableObject {
                 switch completion {
                 case .finished:
                     self.serverCompletion = true
-                    print("Register-->", completion)
                     break
                 case .failure(let error):
                     if let urlError = error as? NSError {

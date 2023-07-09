@@ -13,7 +13,7 @@ struct RegisterBody: Codable {
     let username: String
     let password: String
 }
-                                  
+
 struct LoginBody: Codable {
     let username: String
     let password: String
@@ -54,12 +54,12 @@ enum ProductsListType {
 }
 
 enum TokenRequestType: String {
-case register = "register"
-case login = "login"
+    case register = "register"
+    case login = "login"
 }
 
 enum ProductsRequestType: String {
-case all = "products"
-case byCategory = "categories/"
-case favorites = "products/ids"
+    case all = "products"
+    case byCategory = "categories/"
+    case favorites = "products/ids"
 }

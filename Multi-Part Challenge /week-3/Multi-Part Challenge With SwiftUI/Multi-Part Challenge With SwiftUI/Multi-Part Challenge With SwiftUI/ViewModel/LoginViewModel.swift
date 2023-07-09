@@ -31,12 +31,11 @@ class LoginViewModel: ObservableObject {
     
     func fetchAccessToken(){
         dataService.getToken(username: userName, password: password, requestType: .login)
-       // dataService.getToken(username: "1@1.com", password: "qwerT", requestType: .login)// for testing
+        // dataService.getToken(username: "1@1.com", password: "qwerT", requestType: .login)// for testing
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
                     self.serverCompletion = true
-                    print("Login----->", completion)
                     break
                 case .failure(let error):
                     self.failure = true
